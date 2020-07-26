@@ -1,0 +1,19 @@
+
+<!-- Link Gitalk 的支持文件  -->
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script> 
+<script type="text/javascript" src="/assets/js/md5.min.js"></script>
+<div id="gitalk-container"></div>     
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+    // gitalk的主要参数
+        clientID: '3563f5d8e5a9570dd67c',
+        clientSecret: 'edfc012d562702c9747b9abc0b36c2400e8b6fa1',
+        repo: 'cclinuxer.github.io',
+        owner: 'cclinuxer',
+        admin: ['cclinuxer'],
+        id: md5(location.pathname),
+    });
+    gitalk.render('gitalk-container');
+</script> 
+<!-- Gitalk end -->
