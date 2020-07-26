@@ -12,7 +12,7 @@ github_repo: "https://github.com/cclinuxer/cclinuxer.github.io.git" # you code r
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "非淡泊无以明志，非宁静无以致远"
-sidebar-avatar: /img/about-BY-gentle.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/blog.jpg.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 # SNS settings
