@@ -2,7 +2,7 @@
 layout:     post
 title:      Device Tree（一）：背景介绍（转）
 subtitle:   Device Tree（一）：背景介绍（转）
-date:       2020-07-27
+date:       2020-07-29
 author:     Albert Jie
 header-img: img/post-bg-re-vs-ng2.jpg
 catalog: true
@@ -32,7 +32,7 @@ tags:
 
 本文主要从下面几个方面阐述为何ARM linux会引入Device Tree：
 
-1、没有Device Tree的ARM linux是如何运转的？
+1、没有Device Tree的ARM linux是如何运转的
 
 2、混乱的ARM architecture代码和存在的问题
 
@@ -68,7 +68,7 @@ tags:
 
 ## 三、混乱的ARM architecture代码和存在的问题
 
-每次正式的linux kernel release之后都会有两周的merge window，在这个窗口期间，kernel各个部分的维护者都会提交各自的patch，将自己测试稳定的代码请求并入kernel main line。每到这个时候，Linus就会比较繁忙，他需要从各个内核维护者的分支上取得最新代码并merge到自己的kernel source tree中。Tony Lindgren，内核OMAP development tree的维护者，发送了一个邮件给Linus，请求提交OMAP平台代码修改，并给出了一些细节描述：
+​	每次正式的linux kernel release之后都会有两周的merge window，在这个窗口期间，kernel各个部分的维护者都会提交各自的patch，将自己测试稳定的代码请求并入kernel main line。每到这个时候，Linus就会比较繁忙，他需要从各个内核维护者的分支上取得最新代码并merge到自己的kernel source tree中。Tony Lindgren，内核OMAP development tree的维护者，发送了一个邮件给Linus，请求提交OMAP平台代码修改，并给出了一些细节描述：
 
 1、简单介绍本次改动
 
@@ -76,9 +76,9 @@ tags:
 
 一切都很平常，也给出了足够的信息，然而，正是这个pull request引发了一场针对ARM linux的内核代码的争论。我相信Linus一定是对ARM相关的代码早就不爽了，ARM的merge工作量较大倒在其次，主要是他认为ARM很多的代码都是垃圾，代码里面有若干愚蠢的table，而多个人在维护这个table，从而导致了冲突。因此，在处理完OMAP的pull request之后（Linus并非针对OMAP平台，只是Tony Lindgren撞在枪口上了），他发出了怒吼：
 
-> ```
-> Gaah. Guys, this whole ARM thing is a f*cking pain in the ass.
-> ```
+```c
+Gaah. Guys, this whole ARM thing is a f*cking pain in the ass.
+```
 
 负责ARM linux开发的Russell King脸上挂不住，进行了反驳：事情没有那么严重，这次的merge conficts就是OMAP和IMX/MXC之间一点协调的问题，不能抹杀整个ARM linux团队的努力。其他的各个ARM平台维护者也加入讨论：ARM平台如何复杂，如何庞大，对于arm linux code我们已经有一些思考，正在进行中……一时间，讨论的气氛有些尖锐，但总体是坦诚和友好的。
 
