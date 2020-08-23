@@ -32,7 +32,7 @@ tags:
 
 ​	为了了解Device Tree的结构，我们首先给出一个Device Tree的示例：
 
-```c
+```
 / o device-tree 
    |- name = "device-tree" 
    |- model = "MyBoardName" 
@@ -85,7 +85,7 @@ tags:
 
 ​	了解了基本的device tree的结构后，我们总要把这些结构体现在device tree source code上来。在linux kernel中，扩展名是dts的文件就是描述硬件信息的device tree source file，在dts文件中，一个node被定义成：
 
-```c
+```
 [label:] node-name[@unit-address] { 
   [properties definitions] 
   [child nodes] 
@@ -98,7 +98,7 @@ tags:
 
 1、skeleton.dtsi。位于linux-3.14\arch\arm\boot\dts目录下，具体该文件的内容如下：
 
-```c
+```
 / { 
   \#address-cells = <1>; 
   \#size-cells = <1>; 
@@ -132,7 +132,7 @@ tags:
 
 ​	本例中的物理内存的布局并没有通过memory node传递，其实我们可以使用command line传递，我们command line中的参数[“mem=64M@0x30000000](mailto:"mem=64M@0x30000000)”已经给出了具体的信息。我们用另外一个例子来加深对本节描述的各个属性以及memory node的理解。假设我们的系统是64bit的，physical memory分成两段，定义如下：
 
-```c
+```
 RAM: starting address 0x0, length 0x80000000 (2GB) 
 RAM: starting address 0x100000000, length 0x100000000 (4GB)
 ```
@@ -163,32 +163,32 @@ memory@100000000 {
 
 2、s3c24xx.dtsi。位于linux-3.14\arch\arm\boot\dts目录下，具体该文件的内容如下（有些内容省略了，领会精神即可，不需要描述每一个硬件定义的细节）：
 
-```c
+```
 \#include "skeleton.dtsi"
 
 / { 
-  compatible = "samsung,s3c24xx"; －－－－－－－－－－－－－－－－－－－（A） 
-  interrupt-parent = <&intc>; －－－－－－－－－－－－－－－－－－－－－－（B）
+  compatible = "samsung,s3c24xx"; －－－－－－－－－－－－－－－－－－ （A） 
+  interrupt-parent = <&intc>; －－－－－－－－－－－－－－－－－－－－－（B）
 
   aliases { 
-    pinctrl0 = &pinctrl_0; －－－－－－－－－－－－－－－－－－－－－－－－（C） 
+    pinctrl0 = &pinctrl_0; －－－－－－－－－－－－－－－－－－－－－－ （C） 
   };
 
-  intc:interrupt-controller@4a000000 { －－－－－－－－－－－－－－－－－－（D） 
+  intc:interrupt-controller@4a000000 { －－－－－－－－－－－－－－－ （D） 
     compatible = "samsung,s3c2410-irq"; 
     reg = <0x4a000000 0x100>; 
     interrupt-controller; 
     \#interrupt-cells = <4>; 
   };
 
-  [serial@50000000](mailto:serial@50000000) { －－－－－－－－－－－－－－－－－－－－－－（E） 
+  [serial@50000000](mailto:serial@50000000) { －－－－－－－－－－－（E） 
     compatible = "samsung,s3c2410-uart"; 
     reg = <0x50000000 0x4000>; 
     interrupts = <1 0 4 28>, <1 1 4 28>; 
     status = "disabled"; 
   };
 
-  pinctrl_0: pinctrl@56000000 {－－－－－－－－－－－－－－－－－－（F） 
+  pinctrl_0: pinctrl@56000000 {   －－－－－－－－－－－－－－－－－－（F） 
     reg = <0x56000000 0x1000>;
 
  wakeup-interrupt-controller { 
@@ -201,7 +201,6 @@ memory@100000000 {
               <0 0 5 4>;
      }; 
   };
-
 …… 
 };
 ```
@@ -226,7 +225,7 @@ intc是一个lable，标识了一个device node（在本例中是标识了interr
 
 （D）intc（node name是interrupt-controller@4a000000 ，我这里直接使用lable）是描述interrupt controller的device node。根据S3C24xx的datasheet，我们知道interrupt controller的寄存器地址从0x4a000000开始，长度为0x100（实际2451的interrupt的寄存器地址空间没有那么长，0x4a000074是最后一个寄存器），也就是reg属性定义的内容。interrupt-controller属性为空，只是用来标识该node是一个interrupt controller而不是interrupt nexus（interrupt nexus需要在不同的interrupt domains之间进行翻译，需要定义interrupt-map的属性，本文不涉及这部分的内容）。#interrupt-cells 和#address-cells概念是类似的，也就是说，用多少个u32来标识一个interrupt source。我们可以看到，在具体HW block的interrupt定义中都是用了4个u32来表示，例如串口的中断是这样定义的：
 
-```c
+```
 interrupts = <1 0 4 28>, <1 1 4 28>; 
 ```
 
@@ -236,7 +235,7 @@ interrupts = <1 0 4 28>, <1 1 4 28>;
 
 3、s3c2416.dtsi。位于linux-3.14\arch\arm\boot\dts目录下，具体该文件的内容如下（有些内容省略了，领会精神即可，不需要描述每一个硬件定义的细节）：
 
-``` c
+``` 
 \#include "s3c24xx.dtsi" 
 \#include "s3c2416-pinctrl.dtsi"
 
@@ -244,7 +243,7 @@ interrupts = <1 0 4 28>, <1 1 4 28>;
   model = "Samsung S3C2416 SoC"; 
   compatible = "samsung,s3c2416"; －－－－－－－－－－－－－－－A
 
-  cpus { －－－－－－－－－－－－－－－－－－－－－－－－－－－－B 
+  cpus {                          －－－－－－－－－－－－－－－B 
     \#address-cells = <1>; 
     \#size-cells = <0>;
 
@@ -253,10 +252,9 @@ interrupts = <1 0 4 28>, <1 1 4 28>;
     }; 
   };
 
-  interrupt-controller@4a000000 { －－－－－－－－－－－－－－－－－C 
+  interrupt-controller@4a000000 { －   －－－－－－－－－－－－C 
     compatible = "samsung,s3c2416-irq"; 
   };
-
 ……
 
 };
@@ -268,14 +266,16 @@ interrupts = <1 0 4 28>, <1 1 4 28>;
 
 （C）s3c24xx.dtsi文件和s3c2416.dtsi中都有[interrupt-controller@4a000000](mailto:interrupt-controller@4a000000)这个node，DTC会对这两个node进行合并，最终编译的结果如下：
 
-> interrupt-controller@4a000000 { 
->     compatible = "samsung,s3c2416-irq"; 
->     reg = <0x4a000000 0x100>; 
->     interrupt-controller; 
->     \#interrupt-cells = <0x4>; 
->     linux,phandle = <0x1>; 
->     phandle = <0x1>; 
->   };
+```
+interrupt-controller@4a000000 { 
+ compatible = "samsung,s3c2416-irq"; 
+ reg = <0x4a000000 0x100>; 
+ interrupt-controller; 
+ \#interrupt-cells = <0x4>; 
+ linux,phandle = <0x1>; 
+ phandle = <0x1>; 
+};
+```
 
 4、s3c2416-pinctrl.dtsi
 

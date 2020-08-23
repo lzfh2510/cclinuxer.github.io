@@ -57,16 +57,14 @@ MMU = off, D-cache = off, I-cache = dont care, r0 = 0, r1 = machine nr, r2 = ata
 void __init setup_arch(char **cmdline_p) 
 { 
   const struct machine_desc *mdesc;
-
-……
+//……
 
   mdesc = setup_machine_fdt(__atags_pointer); 
   if (!mdesc) 
     mdesc = setup_machine_tags(__atags_pointer, __machine_arch_type); 
   machine_desc = mdesc; 
   machine_name = mdesc->name;
-
-…… 
+//…… 
 }
 ```
 
@@ -76,7 +74,7 @@ void __init setup_arch(char **cmdline_p)
 
 setup_machine_fdt函数的功能就是根据Device Tree的信息，找到最适合的machine描述符。具体代码如下：
 
-```
+```c
 const struct machine_desc * __init setup_machine_fdt(unsigned int dt_phys) 
 { 
   const struct machine_desc *mdesc, *mdesc_best = NULL;
@@ -105,9 +103,7 @@ of_flat_dt_match_machine是在machine描述符的列表中scan，找到最合适
 struct machine_desc { 
   unsigned int    nr;    /* architecture number  */ 
   const char *const   *dt_compat;  /* array of device tree 'compatible' strings  */
-
-……
-
+//....
   };
 ```
 
@@ -197,20 +193,20 @@ void __init unflatten_device_tree(void)
 
 ```c
 struct device_node { 
-  const char *name;－－－－－－－－－－－－－－－－－－－－－－device node name 
-  const char *type;－－－－－－－－－－－－－－－－－－－－－－－对应device_type的属性 
-  phandle phandle;－－－－－－－－－－－－－－－－－－－－－－－对应该节点的phandle属性 
-  const char *full_name; －－－－－－－－－－－－－－－－从“/”开始的，表示该node的full path
+  const char *name;//－－－－－－－－－－－－－－－－－－－－－－device node name 
+  const char *type;//－－－－－－－－－－－－－－－－－－－－－－－对应device_type的属性 
+  phandle phandle;//－－－－－－－－－－－－－－－－－－－－－－－对应该节点的phandle属性 
+  const char *full_name; //－－－－－－－－－－－－－－－－从“/”开始的，表示该node的full path
 
-  struct  property *properties;－－－－－－－－－－－－－该节点的属性列表 
-  struct  property *deadprops; －－－－－－－－－－如果需要删除某些属性，kernel并非真的删除，而是挂入到deadprops的列表 
-  struct  device_node *parent;－－－－－－parent、child以及sibling将所有的device node连接起来 
+  struct  property *properties;//－－－－－－－－－－－－－该节点的属性列表 
+  struct  property *deadprops; //－－－－－－－－－－如果需要删除某些属性，kernel并非真的删除，而是挂入到deadprops的列表 
+  struct  device_node *parent;//－－－－－－parent、child以及sibling将所有的device node连接起来 
   struct  device_node *child; 
   struct  device_node *sibling; 
-  struct  device_node *next; －－－－－－－－通过该指针可以获取相同类型的下一个node 
-  struct  device_node *allnext;－－－－－－－通过该指针可以获取node global list下一个node 
-  struct  proc_dir_entry *pde;－－－－－－－－开放到userspace的proc接口信息 
-  struct  kref kref;－－－－－－－－－－－－－该node的reference count 
+  struct  device_node *next; //－－－－－－－－通过该指针可以获取相同类型的下一个node 
+  struct  device_node *allnext;//－－－－－－－通过该指针可以获取node global list下一个node 
+  struct  proc_dir_entry *pde;//－－－－－－－－开放到userspace的proc接口信息 
+  struct  kref kref;//－－－－－－－－－－－－－该node的reference count 
   unsigned long _flags; 
   void  *data; 
 };
@@ -233,7 +229,7 @@ static void __unflatten_device_tree(struct boot_param_header *blob,－－－需�
   void *start, *mem; 
   struct device_node **allnextp = mynodes;
 
-  此处删除了health check代码，例如检查DTB header的magic，确认blob的确指向一个DTB。
+  //此处删除了health check代码，例如检查DTB header的magic，确认blob的确指向一个DTB。
 
   /* scan过程分成两轮，第一轮主要是确定device-tree structure的长度，保存在size变量中 */ 
   start = ((void *)blob) + be32_to_cpu(blob->off_dt_struct); 
@@ -250,8 +246,7 @@ static void __unflatten_device_tree(struct boot_param_header *blob,－－－需�
   start = ((void *)blob) + be32_to_cpu(blob->off_dt_struct); 
   unflatten_dt_node(blob, mem, &start, NULL, &allnextp, 0); 
   
-
-  此处略去校验溢出和校验OF_DT_END。 
+  //此处略去校验溢出和校验OF_DT_END。 
 }
 ```
 
@@ -272,33 +267,33 @@ static void __unflatten_device_tree(struct boot_param_header *blob,－－－需�
 ```c
 void __init arm_dt_init_cpu_maps(void) 
 { 
-  scan device node global list，寻找full path是“/cpus”的那个device node。cpus这个device node只是一个容器，其中包括了各个cpu node的定义以及所有cpu node共享的property。 
+ // scan device node global list，寻找full path是“/cpus”的那个device node。cpus这个device node只是一个容器，其中包括了各个cpu node的定义以及所有cpu node共享的property。 
   cpus = of_find_node_by_path("/cpus");
 
  
 
-  for_each_child_of_node(cpus, cpu) {      遍历cpus的所有的child node 
+  for_each_child_of_node(cpus, cpu) {      //遍历cpus的所有的child node 
     u32 hwid;
 
-    if (of_node_cmp(cpu->type, "cpu"))    我们只关心那些device_type是cpu的node 
+    if (of_node_cmp(cpu->type, "cpu"))    ///我们只关心那些device_type是cpu的node 
       continue;
 
 
-    if (of_property_read_u32(cpu, "reg", &hwid)) {  读取reg属性的值并赋值给hwid 
+    if (of_property_read_u32(cpu, "reg", &hwid)) {  //读取reg属性的值并赋值给hwid 
       return; 
     }
 
-    reg的属性值的8 MSBs必须设置为0，这是ARM CPU binding定义的。 
+    //reg的属性值的8 MSBs必须设置为0，这是ARM CPU binding定义的。 
     if (hwid & ~MPIDR_HWID_BITMASK)  
       return;
 
-    不允许重复的CPU id，那是一个灾难性的设定 
+    //不允许重复的CPU id，那是一个灾难性的设定 
     for (j = 0; j < cpuidx; j++) 
       if (WARN(tmp_map[j] == hwid, "Duplicate /cpu reg " 
               "properties in the DT\n")) 
         return;
 
-数组tmp_map保存了系统中所有CPU的MPIDR值（CPU ID值），具体的index的编码规则是： tmp_map[0]保存了booting CPU的id值，其余的CPU的ID值保存在1～NR_CPUS的位置。 
+//数组tmp_map保存了系统中所有CPU的MPIDR值（CPU ID值），具体的index的编码规则是： tmp_map[0]保存了booting CPU的id值，其余的CPU的ID值保存在1～NR_CPUS的位置。 
     if (hwid == mpidr) { 
       i = 0; 
       bootcpu_valid = true; 
@@ -309,7 +304,7 @@ void __init arm_dt_init_cpu_maps(void)
     tmp_map[i] = hwid; 
   }
 
-根据DTB中的信息设定cpu logical map数组。
+//根据DTB中的信息设定cpu logical map数组。
 
   for (i = 0; i < cpuidx; i++) { 
     set_cpu_possible(i, true); 
@@ -332,14 +327,14 @@ int __init early_init_dt_scan_memory(unsigned long node, const char *uname,
   __be32 *reg, *endp; 
   unsigned long l;
 
-  在初始化的时候，我们会对每一个device node都要调用该call back函数，因此，我们要过滤掉那些和memory block定义无关的node。和memory block定义有的节点有两种，一种是node name是memory@形态的，另外一种是node中定义了device_type属性并且其值是memory。 
+  //在初始化的时候，我们会对每一个device node都要调用该call back函数，因此，我们要过滤掉那些和memory block定义无关的node。和memory block定义有的节点有两种，一种是node name是memory@形态的，另外一种是node中定义了device_type属性并且其值是memory。 
   if (type == NULL) { 
     if (depth != 1 || strcmp(uname, "memory@0") != 0) 
       return 0; 
   } else if (strcmp(type, "memory") != 0) 
     return 0;
 
-  获取memory的起始地址和length的信息。有两种属性和该信息有关，一个是linux,usable-memory，不过最新的方式还是使用reg属性。
+  //获取memory的起始地址和length的信息。有两种属性和该信息有关，一个是linux,usable-memory，不过最新的方式还是使用reg属性。
 
 reg = of_get_flat_dt_prop(node, "linux,usable-memory", &l); 
   if (reg == NULL) 
@@ -349,7 +344,7 @@ reg = of_get_flat_dt_prop(node, "linux,usable-memory", &l);
 
   endp = reg + (l / sizeof(__be32));
 
-reg属性的值是address，size数组，那么如何来取出一个个的address/size呢？由于memory node一定是root node的child，因此dt_root_addr_cells（root node的#address-cells属性值）和dt_root_size_cells（root node的#size-cells属性值）之和就是address，size数组的entry size。
+//size呢？由于memory node一定是root node的child，因此dt_root_addr_cells（root node的#address-cells属性值）和dt_root_size_cells（root node的#size-cells属性值）之和就是address，size数组的entry size。
 
   while ((endp - reg) >= (dt_root_addr_cells + dt_root_size_cells)) { 
     u64 base, size;
@@ -370,9 +365,9 @@ reg属性的值是address，size数组，那么如何来取出一个个的addres
 
 ```c
 DT_MACHINE_START(S3C2416_DT, "Samsung S3C2416 (Flattened Device Tree)") 
-…… 
+//…… 
   .init_irq  = irqchip_init, 
-…… 
+//…… 
 MACHINE_END
 ```
 
@@ -405,7 +400,7 @@ void __init of_irq_init(const struct of_device_id *matches)
   INIT_LIST_HEAD(&intc_desc_list); 
   INIT_LIST_HEAD(&intc_parent_list);
 
-  遍历所有的node，寻找定义了interrupt-controller属性的node，如果定义了interrupt-controller属性则说明该node就是一个中断控制器。
+  //遍历所有的node，寻找定义了interrupt-controller属性的node，如果定义了interrupt-controller属性则说明该node就是一个中断控制器。
 
   for_each_matching_node(np, matches) { 
     if (!of_find_property(np, "interrupt-controller", NULL) || 
@@ -413,61 +408,61 @@ void __init of_irq_init(const struct of_device_id *matches)
       continue; 
     
 
-分配内存并挂入链表，当然还有根据interrupt-parent建立controller之间的父子关系。对于interrupt controller，它也可能是一个树状的结构。 
+//分配内存并挂入链表，当然还有根据interrupt-parent建立controller之间的父子关系。对于interrupt controller，它也可能是一个树状的结构。 
     desc = kzalloc(sizeof(*desc), GFP_KERNEL); 
     if (WARN_ON(!desc)) 
       goto err;
 
-​    desc->dev = np; 
-​    desc->interrupt_parent = of_irq_find_parent(np); 
-​    if (desc->interrupt_parent == np) 
-​      desc->interrupt_parent = NULL; 
-​    list_add_tail(&desc->list, &intc_desc_list); 
+     desc->dev = np; 
+     desc->interrupt_parent = of_irq_find_parent(np); 
+     if (desc->interrupt_parent == np) 
+        desc->interrupt_parent = NULL; 
+      list_add_tail(&desc->list, &intc_desc_list); 
   }
 
-  正因为interrupt controller被组织成树状的结构，因此初始化的顺序就需要控制，应该从根节点开始，依次递进到下一个level的interrupt controller。 
-  while (!list_empty(&intc_desc_list)) { intc_desc_list链表中的节点会被一个个的处理，每处理完一个节点就会将该节点删除，当所有的节点被删除，整个处理过程也就是结束了。 
+ // 正因为interrupt controller被组织成树状的结构，因此初始化的顺序就需要控制，应该从根节点开始，依次递进到下一个level的interrupt controller。 
+  while (!list_empty(&intc_desc_list)) { //intc_desc_list链表中的节点会被一个个的处理，每处理完一个节点就会将该节点删除，当所有的节点被删除，整个处理过程也就是结束了。 
      
     list_for_each_entry_safe(desc, temp_desc, &intc_desc_list, list) { 
       const struct of_device_id *match; 
       int ret; 
       of_irq_init_cb_t irq_init_cb;
 
-​      最开始的时候parent变量是NULL，确保第一个被处理的是root interrupt controller。在处理完root node之后，parent变量被设定为root interrupt controller，因此，第二个循环中处理的是所有parent是root interrupt controller的child interrupt controller。也就是level 1（如果root是level 0的话）的节点。
+/// 最开始的时候parent变量是NULL，确保第一个被处理的是root interrupt controller。在处理完root node之后，parent变量被设定为root interrupt controller，因此，第二个循环中处理的是所有parent是root interrupt controller的child interrupt controller。也就是level 1（如果root是level 0的话）的节点。
 
-​      if (desc->interrupt_parent != parent) 
-​        continue;
+	if (desc->interrupt_parent != parent) 
+	     continue;
 
-​      list_del(&desc->list);   －－－－－从链表中删除 
-​      match = of_match_node(matches, desc->dev);－－－－－匹配并初始化 
-​      if (WARN(!match->data,－－－－－－－－－－match->data是初始化函数 
-​        "of_irq_init: no init function for %s\n", 
-​        match->compatible)) { 
-​        kfree(desc); 
-​        continue; 
-​      }
+	  list_del(&desc->list);   //－－－－－从链表中删除 
+	  match = of_match_node(matches, desc->dev);//－－－－－匹配并初始化 
+	  if (WARN(!match->data,//－－－－－－－－－－match->data是初始化函数 
+	    "of_irq_init: no init function for %s\n", 
+	    match->compatible)) { 
+	    kfree(desc); 
+	     continue; 
+	    }
 
-​      irq_init_cb = (of_irq_init_cb_t)match->data; 
-​      ret = irq_init_cb(desc->dev, desc->interrupt_parent);－－－－－执行初始化函数 
-​      if (ret) { 
-​        kfree(desc); 
-​        continue; 
-​      }
+	    irq_init_cb = (of_irq_init_cb_t)match->data; 
+	   ret = irq_init_cb(desc->dev, desc->interrupt_parent);//－－－－－执行初始化函数 
+	  if (ret) { 
+	      kfree(desc); 
+	      continue; 
+	   }
 
-​      处理完的节点放入intc_parent_list链表，后面会用到 
-​      list_add_tail(&desc->list, &intc_parent_list); 
-​    }
+	// 处理完的节点放入intc_parent_list链表，后面会用到 
+	  list_add_tail(&desc->list, &intc_parent_list); 
+	  }
 
-​    对于level 0，只有一个root interrupt controller，对于level 1，可能有若干个interrupt controller，因此要遍历这些parent interrupt controller，以便处理下一个level的child node。 
-​    desc = list_first_entry_or_null(&intc_parent_list, 
-​            typeof(*desc), list); 
-​    if (!desc) { 
-​      pr_err("of_irq_init: children remain, but no parents\n"); 
-​      break; 
-​    } 
-​    list_del(&desc->list); 
-​    parent = desc->dev; 
-​    kfree(desc); 
+	//对于level 0，只有一个root interrupt controller，对于level 1，可能有若干个interrupt controller，因此要遍历这些parent interrupt controller，以便处理下一个level的child node。 
+	 desc = list_first_entry_or_null(&intc_parent_list, 
+	         typeof(*desc), list); 
+	 if (!desc) { 
+	  pr_err("of_irq_init: children remain, but no parents\n"); 
+	  break; 
+	 } 
+	list_del(&desc->list); 
+	 parent = desc->dev; 
+	 kfree(desc); 
   }
 
   list_for_each_entry_safe(desc, temp_desc, &intc_parent_list, list) { 
@@ -512,14 +507,14 @@ OK，我们已经通过compatible属性找到了适合的interrupt controller，
 ```c
 static struct s3c24xx_irq_of_ctrl s3c2416_ctrl[] = { 
   { 
-    .name = "intc", －－－－－－－－－－－main controller 
+    .name = "intc", //－－－－－－－－－－－main controller 
     .offset = 0, 
   }, { 
-    .name = "subintc", －－－－－－－－－sub controller 
+    .name = "subintc", //－－－－－－－－－sub controller 
     .offset = 0x18, 
     .parent = &s3c_intc[0], 
   }, { 
-    .name = "intc2", －－－－－－－－－－second main controller 
+    .name = "intc2", //－－－－－－－－－－second main controller 
     .offset = 0x40, 
   } 
 };
@@ -556,21 +551,21 @@ arch_initcall(customize_machine);
 ```c
 static void __init s3c2416_dt_machine_init(void) 
 { 
-  of_platform_populate(NULL, --------传入NULL参数表示从root node开始scan
+  of_platform_populate(NULL, //--------传入NULL参数表示从root node开始scan
 
   of_default_bus_match_table, s3c2416_auxdata_lookup, NULL);
 
-  s3c_pm_init(); －－－－－－－－power management相关的初始化 
+  s3c_pm_init(); //－－－－－－－－power management相关的初始化 
 }
 ```
 
 由此可见，最终生成platform device的代码来自of_platform_populate函数。该函数的逻辑比较简单，遍历device node global list中所有的node，并调用of_platform_bus_create处理，of_platform_bus_create函数代码如下：
 
 ```c
-static int of_platform_bus_create(struct device_node *bus,-------------要创建的那个device node 
-         const struct of_device_id *matches,-------要匹配的list 
-         const struct of_dev_auxdata *lookup,------附属数据 
-         struct device *parent, bool strict)---------------parent指向父节点。strict是否要求完全匹配 
+static int of_platform_bus_create(struct device_node *bus,//-------------要创建的那个device node 
+         const struct of_device_id *matches,//-------要匹配的list 
+         const struct of_dev_auxdata *lookup,//------附属数据 
+         struct device *parent, bool strict)//---------------parent指向父节点。strict是否要求完全匹配 
 { 
   const struct of_dev_auxdata *auxdata; 
   struct device_node *child; 
@@ -579,28 +574,28 @@ static int of_platform_bus_create(struct device_node *bus,-------------要创建
   void *platform_data = NULL; 
   int rc = 0;
 
-删除确保device node有compatible属性的代码。
+//删除确保device node有compatible属性的代码。
 
-  auxdata = of_dev_lookup(lookup, bus); 在传入的lookup table寻找和该device node匹配的附加数据 
+  auxdata = of_dev_lookup(lookup, bus); //在传入的lookup table寻找和该device node匹配的附加数据 
   if (auxdata) { 
-    bus_id = auxdata->name;-----------------如果找到，那么就用附加数据中的静态定义的内容 
+    bus_id = auxdata->name;//-----------------如果找到，那么就用附加数据中的静态定义的内容 
     platform_data = auxdata->platform_data; 
   }
 
-ARM公司提供了CPU core，除此之外，它设计了AMBA的总线来连接SOC内的各个block。符合这个总线标准的SOC上的外设叫做ARM Primecell Peripherals。如果一个device node的compatible属性值是arm,primecell的话，可以调用of_amba_device_create来向amba总线上增加一个amba device。
+//ARM公司提供了CPU core，除此之外，它设计了AMBA的总线来连接SOC内的各个block。符合这个总线标准的SOC上的外设叫做ARM Primecell Peripherals。如果一个device node的compatible属性值是arm,primecell的话，可以调用of_amba_device_create来向amba总线上增加一个amba device。
 
   if (of_device_is_compatible(bus, "arm,primecell")) { 
     of_amba_device_create(bus, bus_id, platform_data, parent); 
     return 0; 
   }
 
-  如果不是ARM Primecell Peripherals，那么我们就需要向platform bus上增加一个platform device了
+  //如果不是ARM Primecell Peripherals，那么我们就需要向platform bus上增加一个platform device了
 
   dev = of_platform_device_create_pdata(bus, bus_id, platform_data, parent); 
   if (!dev || !of_match_node(matches, bus)) 
     return 0;
 
-  一个device node可能是一个桥设备，因此要重复调用of_platform_bus_create来把所有的device node处理掉。
+  //一个device node可能是一个桥设备，因此要重复调用of_platform_bus_create来把所有的device node处理掉。
 
   for_each_child_of_node(bus, child) { 
     pr_debug("  create child: %s\n", child->full_name); 
@@ -627,23 +622,23 @@ static struct platform_device *of_platform_device_create_pdata(
 { 
   struct platform_device *dev;
 
-  if (!of_device_is_available(np))---------check status属性，确保是enable或者OK的。 
+  if (!of_device_is_available(np))//---------check status属性，确保是enable或者OK的。 
     return NULL;
 
-  of_device_alloc除了分配struct platform_device的内存，还分配了该platform device需要的resource的内存（参考struct platform_device 中的resource成员）。当然，这就需要解析该device node的interrupt资源以及memory address资源。
+ // of_device_alloc除了分配struct platform_device的内存，还分配了该platform device需要的resource的内存（参考struct platform_device 中的resource成员）。当然，这就需要解析该device node的interrupt资源以及memory address资源。
 
   dev = of_device_alloc(np, bus_id, parent); 
   if (!dev) 
     return NULL;
 
-设定platform_device 中的其他成员 
+//设定platform_device 中的其他成员 
   dev->dev.coherent_dma_mask = DMA_BIT_MASK(32); 
   if (!dev->dev.dma_mask) 
     dev->dev.dma_mask = &dev->dev.coherent_dma_mask; 
   dev->dev.bus = &platform_bus_type; 
   dev->dev.platform_data = platform_data;
 
-  if (of_device_add(dev) != 0) {------------------把这个platform device加入统一设备模型系统中 
+  if (of_device_add(dev) != 0) {//------------------把这个platform device加入统一设备模型系统中 
     platform_device_put(dev); 
     return NULL; 
   }
