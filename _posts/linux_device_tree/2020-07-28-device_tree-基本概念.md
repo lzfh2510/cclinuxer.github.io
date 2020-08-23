@@ -3,7 +3,7 @@ layout:     post
 title:      Device Tree（二）：基本概念（转）
 subtitle:   Device Tree（二）：基本概念（转）
 date:       2020-07-30
-author:     Albert Jie
+author:     Albert
 header-img: img/post-bg-re-vs-ng2.jpg
 catalog: true
 tags:

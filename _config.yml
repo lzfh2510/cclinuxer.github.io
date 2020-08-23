@@ -1,10 +1,10 @@
 # Site settings
-title: Albert Jie's Blog
-SEOTitle: Alerbert Jie的博客 | Albert Jie's Blog
+title: Albert's Blog
+SEOTitle: Alerbert的博客 | Albert's Blog
 header-img: img/post-bg-desk.jpg
 email: huangjieajy@163.com
 description: "非淡泊无以明志，非宁静无以致远."
-keyword: "Albert Jie的博客, Albert Jie's Blog,Linux, network, wlan, wireless"
+keyword: "Albert的博客, Albert's Blog,Linux, network, wlan, wireless"
 url: "https://cclinuxer.github.io/"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/cclinuxer/cclinuxer.github.io.git" # you code repository

@@ -3,7 +3,7 @@ layout:     post
 title:      Device Tree（三）：代码分析（转）
 subtitle:   Device Tree（三）：代码分析（转）
 date:       2020-07-31
-author:     Albert Jie
+author:     Albert
 header-img: img/post-bg-re-vs-ng2.jpg
 catalog: true
 tags:

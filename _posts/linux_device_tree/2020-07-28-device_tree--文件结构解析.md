@@ -3,7 +3,7 @@ layout:     post
 title:      Device Tree（四）：文件结构（转）
 subtitle:   Device Tree（四）：文件结构（转）
 date:       2020-08-01
-author:     Albert Jie
+author:     Albert
 header-img: img/post-bg-re-vs-ng2.jpg
 catalog: true
 tags:
