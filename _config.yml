@@ -99,11 +99,38 @@ page-mathjax: false
 # Friends
 friends: [
     {
-        title: "Apple",
-        href: "https://apple.com"
+        title: "Jeffxie",
+        href: "https://x-lugoo.github.io/"
     },{
-        title: "Apple Developer",
-        href: "https://developer.apple.com/"
+        title: "Quentin Schulz",
+        href: "https://github.com/QSchulz"
+    },{
+        title: "Ilya V. Matveychikov",
+        href: "https://github.com/milabs"
+    },{
+        title: "Oliver Yang",
+        href: "http://oliveryang.net/"
+    },{
+        title: "蜗窝科技",
+        href: "http://www.wowotech.net/"
+    },{
+        title: "Linux Performance",
+        href: "http://linuxperf.com/"
+    },{
+        title: "魅族内核团队",
+        href: "http://kernel.meizu.com/"
+    },{
+        title: "dog250",
+        href: "https://me.csdn.net/blog/dog250"
+    },{
+        title: "网络分析",
+        href: "https://me.csdn.net/fanxiaoyu321"
+    },{
+        title: "lwn",
+        href: "https://lwn.net/Kernel/"
+    },{
+        title: "tolimit",
+        href: "https://www.cnblogs.com/tolimit/"
     }
 ]
 
