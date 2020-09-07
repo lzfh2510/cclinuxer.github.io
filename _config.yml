@@ -28,13 +28,12 @@ github_username:    cclinuxer
 # Build settings
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 highlighter: rouge
-permalink: pretty
-paginate: 10
+permalink: /:year/:month/:title/
+paginate: 18
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
 anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
 # If you have timezone issue (e.g. #68) in China, uncomment to use this:
 #timezone: CN  
-
 
 
 # Gems
@@ -52,8 +51,6 @@ plugins: [jekyll-paginate]
 markdown: kramdown
 kramdown:
   input: GFM                            # use Github Flavored Markdown !important
-
-
 
 # 评论系统
 # Disqus（https://disqus.com/）
@@ -87,7 +84,6 @@ featured-condition-size: 0              # 相同标签数量大于这个数，�
 
 
 # Progressive Web Apps
-chrome-tab-theme-color: "#000000"
 service-worker: true
 
 
