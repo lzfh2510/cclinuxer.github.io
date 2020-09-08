@@ -23,8 +23,6 @@ github_username:    cclinuxer
 #twitter_username:   cclinuxer
 
 
-
-
 # Build settings
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 permalink: /:year/:month/:title/
