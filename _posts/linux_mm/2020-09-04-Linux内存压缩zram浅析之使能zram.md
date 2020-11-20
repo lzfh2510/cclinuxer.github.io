@@ -47,7 +47,7 @@ CONFIG_PACKAGE_kmod-zram=y
 
 打开上述选项后，重新编译固件，开机即可创建zram交换分区成功：
 
-![image-20200904144959188](https://github.com/cclinuxer/cclinuxer.github.io/blob/master/img/image-20200904144959188.png?raw=true)
+![image-20200904144959188](https://gitee.com/cclinuxer/blog_image/raw/master/image/image-20200904144959188.png)
 
 如果想要更改swap分区的大小，那么可以更改/etc/init.d/zram脚本里面的参数设置。
 
