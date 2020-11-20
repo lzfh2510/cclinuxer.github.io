@@ -16,7 +16,7 @@ tags:
 
 ​	众所周知，iptables的每个规则都会记录经过该规则的数据包的个数，如下图所示：
 
-![](https://github.com/cclinuxer/cclinuxer.github.io/blob/master/img/image-20200823202154612.png?raw=true)
+![](https://gitee.com/cclinuxer/blog_image/raw/master/image/image-20200823202154612.png)
 
 ​	那么我们基于此原则，可以对我们想要观察的数据包创建一条规则，规则的执行是-j ACCEPT. 那么该条规则就会对我们想要观察的数据包进行匹配，我们可以在netfilter框架中的任意怀疑丢包的地方创建规则，**如果数据包经过了该规则，那么前面的数据包个数就会递增，说明这条规则之前没有将该数据包丢弃**。这种方法在缩小丢包排查范围来说，十分有效。
 
