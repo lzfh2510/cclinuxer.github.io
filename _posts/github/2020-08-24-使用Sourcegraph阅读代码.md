@@ -38,8 +38,9 @@ tags:
 
 进入GitHub，找一个项目，点开一个文件，在工具栏里会看到多了一个View File的按钮，点击此按钮，如下图：
 
-![image-20200906191256307](https://github.com/cclinuxer/cclinuxer.github.io/blob/master/img/image-20200906191256307.png?raw=true)
+![image-20200906191256307](https://gitee.com/cclinuxer/blog_image/raw/master/image/image-20200906191256307.png)
 进入如下页面：
-![image-20200906191428167](https://github.com/cclinuxer/cclinuxer.github.io/blob/master/img/image-20200906191428167.png?raw=true)
+
+![image-20200906191256307](https://gitee.com/cclinuxer/blog_image/raw/master/image/image-20200906191428167.png)
 
 ​	这样我们就可利用Sourcegraph很方便地查看代码了，是不是很方便，而且项目结构也非常清晰。如有问题欢迎留言一起交流.
