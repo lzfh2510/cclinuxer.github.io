@@ -136,6 +136,9 @@ friends: [
     },{
         title: "zhu hui(mm)",
         href: "http://teawater.github.io/"
+    },{
+        title: "linux脉络梳理进程、IO、内存",
+        href: "http://kernel.pursuitofcloud.org"
     }
 ]
 
