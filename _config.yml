@@ -139,6 +139,15 @@ friends: [
     },{
         title: "linux脉络梳理进程、IO、内存",
         href: "http://kernel.pursuitofcloud.org"
+    },{
+        title: "CMU paper",
+        href: "https://www.pdl.cmu.edu/PDL-FTP/"
+    },{
+        title: "CLK PPT",
+        href: "https://github.com/cclinuxer/CLK"
+    },{
+        title: "SOSP",
+        href: "http://www.sosp.org/"
     }
 ]
 
