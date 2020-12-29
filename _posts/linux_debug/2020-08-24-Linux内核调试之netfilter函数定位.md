@@ -12,13 +12,13 @@ tags:
    - debug
 ---
 
-# Linux内核调试之netfilter函数定位
+# Linux内核调试之`netfilter`函数定位
 
-​		在分析网络协议栈的问题的时候，经常出现netfilter钩子函数丢包的情况，特别是我们自己在内核中注册了大量钩子函数的时候，然而钩子函数是通过遍历链表的方式执行，这个时候我们无法知道是哪一个具体函数丢弃了数据包，这个时候我们可以先打印出函数指针的地址，然后通过addr2line工具将该地址转换为字符串，然后通过grep工具找到该函数定义的地方，从而定位问题。
+​		在分析网络协议栈的问题的时候，经常出现`netfilter`钩子函数丢包的情况，特别是我们自己在内核中注册了大量钩子函数的时候，然而钩子函数是通过遍历链表的方式执行，这个时候我们无法知道是哪一个具体函数丢弃了数据包，这个时候我们可以先打印出函数指针的地址，然后通过`addr2line`工具将该地址转换为字符串，然后通过`grep`工具找到该函数定义的地方，从而定位问题。
 
-##### 先打印出函数地址
+## 一、打印出函数地址
 
-​         一般我们在遍历netfilter函数的地方加下打印，打印出函数地址：
+​         一般我们在遍历`netfilter`函数的地方加下打印，打印出函数地址：
 
 ```c
 static unsigned int nf_iterate(struct list_head *head,
@@ -71,9 +71,15 @@ static unsigned int nf_iterate(struct list_head *head,
 }
 ```
 
-printk("-----debug_nf------address=0x%p\n",(*elemp)->hook);
+`printk("-----debug_nf------address=0x%p\n",(*elemp)->hook);`
 
-##### 根据函数地址找到具体函数
+## 二、根据函数地址找到具体函数
 
-​	/opt/toolchain-aarch64_cortex-a53_gcc-5.2.0_musl-1.1.16/bin/aarch64-openwrt-linux-addr2line 0xffffffc0005d5864 -f -e vmlinux.debug
-​	-e后面的参数vmlinux.debug 可以替换成其他带符号表的文件，如果文件较多，可以写一个shell脚本遍历出来，从而分析特定的钩子函数来判定为什么会导致丢包
+### 2.1、addr2line方式
+
+​	`/opt/toolchain-aarch64_cortex-a53_gcc-5.2.0_musl-1.1.16/bin/aarch64-openwrt-linux-addr2line 0xffffffc0005d5864 -f -e vmlinux.debug`
+​	`-e`后面的参数`vmlinux.debug` 可以替换成其他带符号表的文件，如果文件较多，可以写一个shell脚本遍历出来，从而分析特定的钩子函数来判定为什么会导致丢包
+
+### 2.2 、 获取内核符号地址或符号名
+
+​	请参考我的另外一篇博客：[获取内核符号地址或符号名](https://cclinuxer.gitee.io/2020/09/%E8%8E%B7%E5%8F%96%E5%86%85%E6%A0%B8%E7%AC%A6%E5%8F%B7%E5%92%8C%E5%87%BD%E6%95%B0%E5%90%8D/)。
