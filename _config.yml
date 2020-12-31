@@ -1,26 +1,26 @@
 # Site settings
-title: Albert's Blog
-SEOTitle: Albert的博客 | Albert's Blog
+title: LZ read & study in time
+SEOTitle: LZFH的博客 | LZFH's Blog
 header-img: img/post-bg-desk.jpg
-email: huangjieajy@163.com
-description: "非淡泊无以明志，非宁静无以致远."
-keyword: "Albert的博客, Albert's Blog,Linux, network, wlan, wireless"
+email: 920824835@qq@.com
+description: "waiting."
+keyword: "LZFH的博客, LZFH's Blog,Linux, network, C"
 url: "https://cclinuxer.github.io/"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
-github_repo: "https://github.com/cclinuxer/cclinuxer.github.io.git" # you code repository
+github_repo: "https://github.com/lzfh2510/cclinuxer.github.io.git" # you code repository
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "非淡泊无以明志，非宁静无以致远"
+sidebar-about-description: "waiting."
 sidebar-avatar: /img/blog.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 # SNS settings
 RSS: false
-# weibo_username:     cclinuxer
-zhihu_username:     liu-hai-80-19
-github_username:    cclinuxer
-#twitter_username:   cclinuxer
+# weibo_username:     waiting
+zhihu_username:     wait
+github_username:    lzfh2510
+#twitter_username:   waiting
 
 
 # Build settings
